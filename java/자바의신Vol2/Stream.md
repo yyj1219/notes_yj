@@ -15,11 +15,11 @@ list
 스트림 중간 연산은 다른 Stream을 반환하며, 지연 연산됩니다. <br>
 "지연 연산"은 최종 연산이 호출되기 전까지는 중간 연산이 실제로는 수행되지 않는 걸 의미합니다.
 
-* `filter(Predicate<T> predicate)` : 조건에 맞는 요소를 필터링
-* `map(Function<T, R> mapper)` : 요소를 반환
-* `flatMap(Function<T, Stream<R>> mapper)` : 요소를 평면화
+* `filter(Predicate<T> predicate)` : 데이터를 조건으로 거를 때 사용
+* `map(Function<T, R> mapper)` : 데이터를 특정 데이터로 변환
+* `flatMap(Function<T, Stream<R>> mapper)` : 스트림의 데이터를 잘게 쪼개서 새로운 스트림 제공
 * `distinct()` : 중복 제거
-* `sorted()` : 정렬
+* `sorted()` : 데이터 정렬
 * `limit(long maxSize)` : 스트림 크기 제한
 * `skip(long n)` : 처음 n개 요소를 건너뜀
 
@@ -28,8 +28,8 @@ list
 스트립 최종 연산은 Stream을 소비하고 결과를 반환합니다.
 
 * `forEach(Consumer<T> action)` : 각 요소에 대해 작업 수행
-* `collect(Conllector<T, A, R> collector)` : 결과를 컬렉션으로 수집
-* `reduce(BinaryOperator<T> accumulator)` : 요소를 결합하여 결과 생성
+* `collect(Conllector<T, A, R> collector)` : 원하는 타입으로 데이터 반환
+* `reduce(BinaryOperator<T> accumulator)` : 결과 취합
 * `count()` : 요소의 개수 반환
 * `anyMatch(Predicate<T> predicate)` : 조건에 맞는 요소가 있는지 확인
 * `allMatch(Predicate<T> predicate)` : 모든 요소가 조건을 만족하는지 확인
