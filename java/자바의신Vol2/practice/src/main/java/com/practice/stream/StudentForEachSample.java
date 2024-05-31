@@ -22,22 +22,26 @@ public class StudentForEachSample {
 		sample.filterWithScoreForLoop(studentList, 80);
 	}
 	
+	// stream 최종 연산 forEach 테스트
 	public void printStudentNames(List<StudentDTO> students) {
 		students.stream().forEach(student -> System.out.println(student.getName()));		
 	}
 	
+	// stream 중간 연산 map 테스트
 	public void printStudentNames2(List<StudentDTO> students) {
 		students.stream()
 		.map(student -> student.getName())
 		.forEach(name -> System.out.println(name));
 	}
 	
+	// stream 최종 연산 collect 테스트
 	public static List<String> getMergeNames(List<StudentDTO> students) {
 		return students.stream()
 				.map(student -> student.getName())
 				.collect(Collectors.toList());
 	}
 	
+	// stream 중간 연산 filter 테스트
 	private void filterWithScoreForLoop(List<StudentDTO> studentList, int scoreCutLine) {
 		/*
 		for (StudentDTO student:studentList) {
