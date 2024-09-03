@@ -19,16 +19,25 @@ Elasticsearch/OpenSearch에서 노드(Node)의 실행 모드는 개발 모드와
 
 # 판단 기준
 
-노드가 운영 모드인지 개발 모드인지는 자동으로 판단되는데, 주로 **노드의 네트워크 설정**과 **클러스터 구성**에 따라 판단됩니다.
+노드가 운영 모드인지 개발 모드인지는 network.host(혹은 transport.host)가 localhost 주소에 바인딩되어 있는지 여부에 따라 결정됩니다.
 
-## 운영 모드와 개발 모드를 구분하는 주요 기준
+network.host(혹은 transport.host)가 로컬호스트 주소로 설정되어 있으면 노드가 개발 모드인 것으로 간주하며, 그렇지 않다면 운영 모드에 있는 것으로 간주합니다.
 
-1. **Networ Host 설정**
-  - **운영모드**: `network.host`가 `localhost`, `127.0.0.1` 혹은 `[::1]` 같은 로컬 IP주소가 아닌, 실제 네트워크 인터페이스에(예: `0.0.0.0` 또는 특정 IP)로 설정된 경우
-  - **개발모드**: `network.host`가 `localhost`, `127.0.0.1` 혹은 `[::1]` 으로 설정된 경우
-2. **Discovery 설정**
-  - **운영모드**: 클러스터의 다른 노드를 발견하기 위한 설정(`discovery.seed_hosts`, `discovery.type`, `cluster.initial_master_nodes` 등)이 명시적으로 설정된 경우
-  - **개발모드**: `discovery.type: single-node`가 설정된 경우. 단일 노드 클러스터로 동작하며, 다른 노드를 검색하거나 초기 마스터 노드를 설정하지 않음
+## 관련 옵션
+
+### network.host
+
+- 노드가 바인딩할 네트워크 인터페이스를 지정합니다.
+- HTTP 및 transport 통신 모두에 대한 기본 바인딩 주소로 사용됩니다.
+- `0.0.0.0`으로 설정하면 모든 네트워크 인터페이스에서 접근 가능합니다.
+- 기본 값은 `_local_` 로, 로컬 루프백 주소(127.0.0.1)에만 바인딩됩니다.
+
+### transport.host
+
+- 노드간 통신을 위한 transport 네트워크의 바인딩 주소를 지정합니다.
+- `network.host`가 설정되어 있으면 기본적으로 그 값을 상속받습니다.
+- `transport.host`를 별도로 설정하면 `network.host` 설정을 덮어씁니다.
+- 대부분의 경우 network.host 설정만으로도 충분하지만, 노드 간 통신에 대해 더 세밀한 제어가 필요하면 transport.host를 별도로 설정할 수 있습니다.
 
 # 부트스트랩 검사
 
